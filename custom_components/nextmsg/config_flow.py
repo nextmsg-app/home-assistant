@@ -34,9 +34,9 @@ from .api import (
     NextMsgError,
     NextMsgInvalidCode,
     NextMsgInvalidMessage,
+    NextMsgKeyLimit,
     NextMsgLimitReached,
     NextMsgRateLimited,
-    NextMsgTooManyAgents,
     claim_code,
 )
 from .const import (
@@ -132,8 +132,10 @@ class NextMsgConfigFlow(ConfigFlow, domain=DOMAIN):
                     )
                 except NextMsgInvalidCode:
                     errors[CONF_CODE] = "invalid_code"
-                except NextMsgTooManyAgents:
-                    errors["base"] = "too_many_agents"
+                except NextMsgKeyLimit as err:
+                    errors["base"] = (
+                        "key_limit_free" if err.pro_helps else "key_limit_max"
+                    )
                 except NextMsgRateLimited:
                     errors["base"] = "rate_limited"
                 except NextMsgError:

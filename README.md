@@ -22,10 +22,10 @@ Or by hand: copy `custom_components/nextmsg` into your `config/custom_components
 
 1. **Settings → Devices & services → Add integration → NextMsg**
 2. Choose **Connect with a code from the app**
-3. In the NextMsg app, open **Settings → Agents → Connect agent** and enter the code it shows (it works once, for 5 minutes)
+3. In the NextMsg app, open **Settings → Send keys → Connect with a code** (app 1.4: **Settings → Agents → Connect agent**) and enter the code it shows (it works once, for 5 minutes)
 4. Pick a channel name, like `home`
 
-Home Assistant now shows under **Agents** in the app, where you can rename or revoke it. You can also choose **Enter a key** and paste the send key from **Settings** in the app; a short test message checks it.
+Home Assistant now shows in the app's list of send keys, where you can rename or revoke it. You can also choose **Enter a key** and paste a send key from the app (**Settings → Send keys → Create a key** makes one just for Home Assistant); a short test message checks it.
 
 To add more channels: open the NextMsg integration and choose **Add channel**.
 
