@@ -1,8 +1,16 @@
 {
   "domain": "nextmsg",
   "name": "NextMsg",
-  "codeowners": ["@bartmanskyi"],
+  "categories": [
+    "messaging_notifications.push_notifications"
+  ],
+  "codeowners": [
+    "@bartmanskyi"
+  ],
   "config_flow": true,
+  "connectivity": [
+    "cloud"
+  ],
   "documentation": "https://nextmsg.app/guides/home-assistant",
   "integration_type": "service",
   "iot_class": "cloud_push",
