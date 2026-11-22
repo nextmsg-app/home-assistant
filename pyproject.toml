@@ -1,0 +1,28 @@
+[project]
+name = "nextmsg-home-assistant"
+version = "0.1.0"
+description = "NextMsg custom integration for Home Assistant (installed with HACS)"
+requires-python = ">=3.14.2"
+
+[dependency-groups]
+test = [
+  "pytest-homeassistant-custom-component==0.13.375",
+  "ruff",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["custom_components", "homeassistant"]
+force-sort-within-sections = true
+combine-as-imports = true

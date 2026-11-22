@@ -1,0 +1,109 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This key is already set up."
+    },
+    "error": {
+      "cannot_connect": "Couldn't reach NextMsg. Check the internet connection and try again.",
+      "invalid_auth": "NextMsg didn't accept this key. It may have been rotated or revoked in the app.",
+      "invalid_channel": "Use 1-32 characters: lowercase letters, digits, - and _.",
+      "invalid_code": "This code is wrong, already used or expired. Codes work once, for 5 minutes: make a new one in the app.",
+      "invalid_key": "A key starts with nextmsg_live_ or nextmsg_agent_ followed by 48 characters.",
+      "rate_limited": "Too many attempts. Wait a minute and try again.",
+      "too_many_agents": "This inbox already has 20 agents. Remove one in the app under Settings → Agents.",
+      "unknown": "Unexpected error"
+    },
+    "step": {
+      "code": {
+        "data": {
+          "channel": "Channel",
+          "code": "Code"
+        },
+        "data_description": {
+          "channel": "Messages from Home Assistant get this tab in the app. You can add more channels later.",
+          "code": "In the NextMsg app, open Settings → Agents → Connect agent and enter the code it shows, like K73M-QX9P."
+        },
+        "description": "Home Assistant gets its own key, which you can revoke in the app at any time.",
+        "title": "Connect with a code"
+      },
+      "key": {
+        "data": {
+          "api_key": "Key",
+          "channel": "Channel"
+        },
+        "data_description": {
+          "api_key": "The send key from Settings in the app (nextmsg_live_…), or an agent key (nextmsg_agent_…).",
+          "channel": "Messages from Home Assistant get this tab in the app. You can add more channels later."
+        },
+        "description": "To check the key, a short test message is sent to your phone.",
+        "title": "Use a key"
+      },
+      "reauth_confirm": {
+        "description": "NextMsg no longer accepts the key Home Assistant uses. It may have been rotated or revoked in the app. Connect again to keep your notifications working.",
+        "menu_options": {
+          "code": "Connect with a code from the app (recommended)",
+          "key": "Enter a key"
+        },
+        "title": "Connect NextMsg again"
+      },
+      "reconfigure": {
+        "description": "Replace the key Home Assistant uses. Your channels and automations stay as they are. If the old key was an agent key, revoke it in the app under Settings → Agents.",
+        "menu_options": {
+          "code": "Connect with a code from the app (recommended)",
+          "key": "Enter a key"
+        },
+        "title": "Change the key"
+      },
+      "user": {
+        "description": "Send Home Assistant notifications to your phone with the NextMsg app.",
+        "menu_options": {
+          "code": "Connect with a code from the app (recommended)",
+          "key": "Enter a key"
+        },
+        "title": "NextMsg"
+      }
+    }
+  },
+  "config_subentries": {
+    "channel": {
+      "abort": {
+        "already_configured": "This channel is already added."
+      },
+      "entry_type": "Channel",
+      "error": {
+        "invalid_channel": "Use 1-32 characters: lowercase letters, digits, - and _."
+      },
+      "initiate_flow": {
+        "user": "Add channel"
+      },
+      "step": {
+        "user": {
+          "data": {
+            "channel": "Channel"
+          },
+          "data_description": {
+            "channel": "Like security, energy or garden. Each channel gets its own notify entity in Home Assistant and its own tab in the app."
+          },
+          "title": "Add a channel"
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Couldn't send the message to NextMsg: {error}"
+    },
+    "invalid_auth": {
+      "message": "NextMsg didn't accept the key. Open the NextMsg integration to connect again."
+    },
+    "invalid_message": {
+      "message": "NextMsg didn't accept the message: {error}"
+    },
+    "limit_reached": {
+      "message": "This inbox has used its 100 free messages this month. Pro in the app removes the limit."
+    },
+    "rate_limited": {
+      "message": "NextMsg is limiting messages right now: {error}"
+    }
+  }
+}

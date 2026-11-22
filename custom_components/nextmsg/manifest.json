@@ -1,0 +1,12 @@
+{
+  "domain": "nextmsg",
+  "name": "NextMsg",
+  "codeowners": ["@bartmanskyi"],
+  "config_flow": true,
+  "documentation": "https://nextmsg.app/guides/home-assistant",
+  "integration_type": "service",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/nextmsg-app/home-assistant/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
