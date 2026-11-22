@@ -10,8 +10,8 @@ import aiohttp
 API_URL: Final = "https://api.nextmsg.app"
 TIMEOUT: Final = aiohttp.ClientTimeout(total=15)
 
-# The send key from the app (nextmsg_live_) or an agent key (nextmsg_agent_)
-KEY_RE: Final = re.compile(r"^nextmsg_(live|agent)_[0-9a-f]{48}$")
+# Every NextMsg key, whether copied from the app or got with a code
+KEY_RE: Final = re.compile(r"^nextmsg_live_[0-9a-f]{48}$")
 
 
 class NextMsgError(Exception):
@@ -30,8 +30,17 @@ class NextMsgInvalidCode(NextMsgError):
     """The pickup code is wrong, already used or expired (400 on claim)."""
 
 
-class NextMsgTooManyAgents(NextMsgError):
-    """The inbox already has the most agents it can have (409 on claim)."""
+class NextMsgKeyLimit(NextMsgError):
+    """The inbox has no key left (409 on claim).
+
+    `pro_helps` is True for `key_limit_free` (Free: 2 keys, Pro: 20) and False for
+    `key_limit_max` (Pro inbox at 20).
+    """
+
+    def __init__(self, text: str, pro_helps: bool) -> None:
+        """Initialize the error."""
+        super().__init__(text)
+        self.pro_helps = pro_helps
 
 
 class NextMsgInvalidMessage(NextMsgError):
@@ -46,19 +55,24 @@ class NextMsgRateLimited(NextMsgError):
     """Too many requests, or the Pro daily fair-use limit (429)."""
 
 
-async def _error_text(response: aiohttp.ClientResponse) -> str:
-    """The API's error message, or the HTTP status."""
+async def _error(response: aiohttp.ClientResponse) -> tuple[str, str | None]:
+    """The API's error message (or the HTTP status) and its error code, if any."""
     try:
         body: Any = await response.json(content_type=None)
     except ValueError, aiohttp.ClientError:
         body = None
-    if isinstance(body, dict) and isinstance(body.get("error"), str):
-        return body["error"]
-    return f"HTTP {response.status}"
+    if not isinstance(body, dict):
+        return f"HTTP {response.status}", None
+    text = body.get("error")
+    code = body.get("code")
+    return (
+        text if isinstance(text, str) else f"HTTP {response.status}",
+        code if isinstance(code, str) else None,
+    )
 
 
 async def claim_code(session: aiohttp.ClientSession, code: str, name: str) -> str:
-    """Exchange a pickup code from the app for a new agent key."""
+    """Exchange a pickup code from the app for a new key of its own."""
     try:
         async with session.post(
             f"{API_URL}/v1/agent/claim",
@@ -73,13 +87,13 @@ async def claim_code(session: aiohttp.ClientSession, code: str, name: str) -> st
                 if not isinstance(key, str) or not KEY_RE.match(key):
                     raise NextMsgConnectionError("Unexpected answer from NextMsg")
                 return key
-            text = await _error_text(response)
+            text, code = await _error(response)
     except (aiohttp.ClientError, TimeoutError, ValueError) as err:
         raise NextMsgConnectionError(str(err) or type(err).__name__) from err
     if response.status == 400:
         raise NextMsgInvalidCode(text)
     if response.status == 409:
-        raise NextMsgTooManyAgents(text)
+        raise NextMsgKeyLimit(text, pro_helps=code != "key_limit_max")
     if response.status == 429:
         raise NextMsgRateLimited(text)
     raise NextMsgConnectionError(text)
@@ -105,7 +119,7 @@ class NextMsgClient:
             ) as response:
                 if response.status == 200:
                     return
-                text = await _error_text(response)
+                text, _ = await _error(response)
         except (aiohttp.ClientError, TimeoutError) as err:
             raise NextMsgConnectionError(str(err) or type(err).__name__) from err
         if response.status == 401:

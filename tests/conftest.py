@@ -14,7 +14,7 @@ from homeassistant.config_entries import ConfigSubentryData
 from homeassistant.const import CONF_API_KEY
 
 SEND_KEY = "nextmsg_live_" + "a" * 48
-AGENT_KEY = "nextmsg_agent_" + "b" * 48
+AGENT_KEY = "nextmsg_live_" + "b" * 48
 SEND_URL = "https://api.nextmsg.app/v1/send"
 CLAIM_URL = "https://api.nextmsg.app/v1/agent/claim"
 

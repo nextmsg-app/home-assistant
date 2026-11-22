@@ -11,7 +11,7 @@ CONF_CHANNEL: Final = "channel"
 SUBENTRY_TYPE_CHANNEL: Final = "channel"
 DEFAULT_CHANNEL: Final = "home"
 
-# Name shown for this agent under Settings → Agents in the app
+# Name shown for this key in the app's list of send keys
 AGENT_NAME: Final = "Home Assistant"
 
 # Channel tags as the API accepts them: 1-32 characters, a-z, 0-9, - and _

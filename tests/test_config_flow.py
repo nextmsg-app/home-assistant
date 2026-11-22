@@ -37,7 +37,7 @@ async def test_code_flow(
     hass.config.location_name = "Home"
     aioclient_mock.post(
         CLAIM_URL,
-        json={"send_key": AGENT_KEY, "key_prefix": AGENT_KEY[:26], "name": "x"},
+        json={"send_key": AGENT_KEY, "key_prefix": AGENT_KEY[:25], "name": "x"},
     )
     flow_id = await _start(hass, "code")
     result = await hass.config_entries.flow.async_configure(
@@ -56,7 +56,7 @@ async def test_code_flow(
     ("status", "field", "error"),
     [
         (400, CONF_CODE, "invalid_code"),
-        (409, "base", "too_many_agents"),
+        (409, "base", "key_limit_free"),
         (429, "base", "rate_limited"),
         (503, "base", "cannot_connect"),
     ],
@@ -186,7 +186,7 @@ async def test_reauth_with_code(
 ) -> None:
     """Reauth replaces the key and keeps the channels."""
     config_entry.add_to_hass(hass)
-    new_key = "nextmsg_agent_" + "c" * 48
+    new_key = "nextmsg_live_" + "c" * 48
     aioclient_mock.post(CLAIM_URL, json={"send_key": new_key})
     result = await config_entry.start_reauth_flow(hass)
     assert result["type"] is FlowResultType.MENU
@@ -260,3 +260,17 @@ def test_translations_are_valid_json() -> None:
     """The translation file parses (hassfest checks the rest in CI)."""
     with open("custom_components/nextmsg/translations/en.json", encoding="utf-8") as f:
         json.load(f)
+
+
+async def test_code_flow_key_limit_max(
+    hass: HomeAssistant, aioclient_mock: AiohttpClientMocker
+) -> None:
+    """A Pro inbox at 20 keys gets its own message (buying Pro can't help)."""
+    aioclient_mock.post(
+        CLAIM_URL, status=409, json={"error": "full", "code": "key_limit_max"}
+    )
+    flow_id = await _start(hass, "code")
+    result = await hass.config_entries.flow.async_configure(
+        flow_id, {CONF_CODE: "AAAA-BBBB", CONF_CHANNEL: "home"}
+    )
+    assert result["errors"] == {"base": "key_limit_max"}

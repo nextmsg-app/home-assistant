@@ -129,5 +129,5 @@ async def test_unload(hass: HomeAssistant, loaded: MockConfigEntry) -> None:
 async def test_diagnostics(hass: HomeAssistant, loaded: MockConfigEntry) -> None:
     """Diagnostics never include the key."""
     result = await async_get_config_entry_diagnostics(hass, loaded)
-    assert result == {"key_type": "agent", "channels": ["home"]}
+    assert result == {"channels": ["home"]}
     assert AGENT_KEY not in str(result)
