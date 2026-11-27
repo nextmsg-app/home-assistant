@@ -9,6 +9,8 @@ Send Home Assistant notifications to your phone with [NextMsg](https://nextmsg.a
 
 Needs Home Assistant 2026.10 or later and the NextMsg app 1.4 or later ([App Store](https://apps.apple.com/app/nextmsg-push-notifications/id6831546010), [Google Play](https://play.google.com/store/apps/details?id=app.nextmsg)).
 
+![NextMsg demo: push notifications to your phone and pairing with a code](https://raw.githubusercontent.com/nextmsg-app/mcp/main/assets/demo.gif)
+
 ## Install
 
 With [HACS](https://hacs.xyz):
