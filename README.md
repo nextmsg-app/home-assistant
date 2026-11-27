@@ -1,11 +1,11 @@
 # NextMsg for Home Assistant
 
-Send Home Assistant notifications to your phone with [NextMsg](https://nextmsg.app), the one-way push notification app for iPhone and Android. No account: the app gives you a key, or a code to connect Home Assistant with.
+Send Home Assistant notifications to your phone with [NextMsg](https://nextmsg.app), the one-way push notification app for iPhone and Android. No account: the app gives you a send key, or a pairing code to connect Home Assistant with.
 
-- Set up in the UI with a code from the app; Home Assistant gets its own key that you can revoke in the app at any time
+- Set up in the UI with a pairing code from the app; Home Assistant gets its own key that you can revoke in the app at any time
 - One notify entity per channel (`notify.nextmsg_home`, `notify.nextmsg_security`, …); each channel is its own tab in the app
 - Works with the standard **Notifications: Send a notification message** action (`notify.send_message`), including a title
-- If the key is revoked or rotated, Home Assistant asks you to connect again
+- If the key is revoked, Home Assistant asks you to pair again
 
 Needs Home Assistant 2026.10 or later and the NextMsg app 1.4 or later ([App Store](https://apps.apple.com/app/nextmsg-push-notifications/id6831546010), [Google Play](https://play.google.com/store/apps/details?id=app.nextmsg)).
 
@@ -21,11 +21,11 @@ Or by hand: copy `custom_components/nextmsg` into your `config/custom_components
 ## Set up
 
 1. **Settings → Devices & services → Add integration → NextMsg**
-2. Choose **Connect with a code from the app**
-3. In the NextMsg app, open **Settings → Send keys → Connect with a code** (app 1.4: **Settings → Agents → Connect agent**) and enter the code it shows (it works once, for 5 minutes)
+2. Choose **Use a pairing code from the app**
+3. In the NextMsg app, open **Settings → Send keys → Add send key → Use a pairing code** (older versions: **Connect with a code**) and enter the code it shows (it works once, for 5 minutes)
 4. Pick a channel name, like `home`
 
-Home Assistant now shows in the app's list of send keys, where you can rename or revoke it. You can also choose **Enter a key** and paste a send key from the app (**Settings → Send keys → Create a key** makes one just for Home Assistant); a short test message checks it.
+Home Assistant now shows in the app's list of send keys, where you can rename or revoke it. You can also choose **Enter a key** and paste a send key from the app (**Settings → Send keys → Add send key → Copy a key** makes one just for Home Assistant); a short test message checks it.
 
 To add more channels: open the NextMsg integration and choose **Add channel**.
 
