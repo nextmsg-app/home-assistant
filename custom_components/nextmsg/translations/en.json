@@ -5,9 +5,9 @@
     },
     "error": {
       "cannot_connect": "Couldn't reach NextMsg. Check the internet connection and try again.",
-      "invalid_auth": "NextMsg didn't accept this key. It may have been rotated or revoked in the app.",
+      "invalid_auth": "NextMsg didn't accept this key. It may have been revoked in the app.",
       "invalid_channel": "Use 1-32 characters: lowercase letters, digits, - and _.",
-      "invalid_code": "This code is wrong, already used or expired. Codes work once, for 5 minutes: make a new one in the app.",
+      "invalid_code": "This pairing code is wrong, already used or expired. Pairing codes work once, for 5 minutes: make a new one in the app.",
       "invalid_key": "A key starts with nextmsg_live_ followed by 48 characters.",
       "key_limit_free": "Free inboxes include 2 send keys, and this one has both. Revoke a key you don't use in the app's Settings, or upgrade to Pro for up to 20.",
       "key_limit_max": "This inbox has 20 send keys, the most it can have. Revoke one in the app's Settings first.",
@@ -18,14 +18,14 @@
       "code": {
         "data": {
           "channel": "Channel",
-          "code": "Code"
+          "code": "Pairing code"
         },
         "data_description": {
           "channel": "Messages from Home Assistant get this tab in the app. You can add more channels later.",
-          "code": "In the NextMsg app, open Settings → Send keys → Connect with a code (in older versions: Settings → Agents → Connect agent) and enter the code it shows, like K73M-QX9P."
+          "code": "In the NextMsg app, open Settings → Send keys → Add send key → Use a pairing code (older versions: Connect with a code) and enter the code it shows, like K73M-QX9P."
         },
         "description": "Home Assistant gets its own key, which you can revoke in the app at any time.",
-        "title": "Connect with a code"
+        "title": "Use a pairing code"
       },
       "key": {
         "data": {
@@ -33,16 +33,16 @@
           "channel": "Channel"
         },
         "data_description": {
-          "api_key": "A send key from the app (nextmsg_live_…): Settings → Send keys, where you can also create one just for Home Assistant (older versions: the key in Settings).",
+          "api_key": "A send key from the app (nextmsg_live_…): Settings → Send keys → Add send key → Copy a key, or copy your starter key.",
           "channel": "Messages from Home Assistant get this tab in the app. You can add more channels later."
         },
         "description": "To check the key, a short test message is sent to your phone.",
         "title": "Use a key"
       },
       "reauth_confirm": {
-        "description": "NextMsg no longer accepts the key Home Assistant uses. It may have been rotated or revoked in the app. Connect again to keep your notifications working.",
+        "description": "NextMsg no longer accepts the key Home Assistant uses. It may have been revoked in the app. Pair again to keep your notifications working.",
         "menu_options": {
-          "code": "Connect with a code from the app (recommended)",
+          "code": "Use a pairing code from the app (recommended)",
           "key": "Enter a key"
         },
         "title": "Connect NextMsg again"
@@ -50,7 +50,7 @@
       "reconfigure": {
         "description": "Replace the key Home Assistant uses. Your channels and automations stay as they are. Revoke the old key in the app's Settings if nothing else uses it.",
         "menu_options": {
-          "code": "Connect with a code from the app (recommended)",
+          "code": "Use a pairing code from the app (recommended)",
           "key": "Enter a key"
         },
         "title": "Change the key"
@@ -58,7 +58,7 @@
       "user": {
         "description": "Send Home Assistant notifications to your phone with the NextMsg app.",
         "menu_options": {
-          "code": "Connect with a code from the app (recommended)",
+          "code": "Use a pairing code from the app (recommended)",
           "key": "Enter a key"
         },
         "title": "NextMsg"
